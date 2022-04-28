@@ -1,0 +1,17 @@
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\bin\Debug\net6.0\Infrastructure.deps.json
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\bin\Debug\net6.0\Infrastructure.runtimeconfig.json
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\bin\Debug\net6.0\Infrastructure.dll
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\bin\Debug\net6.0\Infrastructure.pdb
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\bin\Debug\net6.0\Domain.dll
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\bin\Debug\net6.0\Domain.pdb
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.AssemblyReference.cache
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfoInputs.cache
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfo.cs
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CoreCompileInputs.cache
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CopyComplete
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\Infrastructure.dll
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
+E:\Desktop\Work\SinaRazavi-Test\Infrastructure\obj\Debug\net6.0\refint\Infrastructure.dll

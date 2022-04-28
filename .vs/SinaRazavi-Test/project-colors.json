@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "7fdd5654-ea38-47b0-86ba-75fa4f77893f": {
+      "ProjectGuid": "7fdd5654-ea38-47b0-86ba-75fa4f77893f",
+      "DisplayName": "Domain",
+      "ColorIndex": 0
+    },
+    "582a437d-07e3-4722-98f5-306380fe9a13": {
+      "ProjectGuid": "582a437d-07e3-4722-98f5-306380fe9a13",
+      "DisplayName": "Infrastructure",
+      "ColorIndex": 1
+    },
+    "81622cdd-f7e1-402e-9342-bb0ddb7e044c": {
+      "ProjectGuid": "81622cdd-f7e1-402e-9342-bb0ddb7e044c",
+      "DisplayName": "Application",
+      "ColorIndex": 2
+    },
+    "4bcb680b-56d7-4a14-bc93-719f244daf9e": {
+      "ProjectGuid": "4bcb680b-56d7-4a14-bc93-719f244daf9e",
+      "DisplayName": "SinaRazavi-Test",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}
