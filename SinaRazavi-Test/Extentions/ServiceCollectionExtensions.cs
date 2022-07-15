@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Application.Services.AcountServices;
 using Domain.Common;
+using Domain.Common.DependencyLifeTime;
 using Domain.Entities.IdentityModel;
-using Infrastructure.IRepository;
 using Infrastructure.Persistance;
+using Infrastructure.Repository;
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -25,6 +17,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SinaRazavi_Test.Common.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Text.Json;
 
 namespace SinaRazavi_Test.Extentions
 {
@@ -169,6 +166,36 @@ namespace SinaRazavi_Test.Extentions
                     return (versions ?? Array.Empty<ApiVersion>()).Any(v => $"v{v}" == docName);
                 });
             });
+        }
+
+        public static void AddMapster(this IServiceCollection services)
+        {
+            var config = new TypeAdapterConfig();
+
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, ServiceMapper>();
+
+        }
+        public static void AddScrutor(this IServiceCollection services)
+        {
+            services.Scan(scan => scan
+                .FromAssemblyOf<AcountService>()
+                .AddClasses(classes => classes.AssignableTo<ITransientService>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+
+                .AddClasses(classes => classes.AssignableTo<IScopedService>())
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
+
+                .FromAssemblyOf<UserRepository>()
+                .AddClasses(classes => classes.AssignableTo<ITransientService>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+
+                .AddClasses(classes => classes.AssignableTo<IScopedService>())
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
         }
     }
 }

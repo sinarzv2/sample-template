@@ -1,4 +1,5 @@
-﻿using Application.Dto.UserDto;
+﻿using System;
+using Application.Dto.UserDto;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,11 +9,11 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace SinaRazavi_Test.Controllers.V1
 {
     [ApiVersion("1")]
-    public class UserController : BaseV1Controller
+    public class AccountController : BaseV1Controller
     {
 
         protected readonly IAcountService AcountService;
-        public UserController(IAcountService acountService)
+        public AccountController(IAcountService acountService)
         {
             AcountService = acountService;
         }
@@ -31,6 +32,7 @@ namespace SinaRazavi_Test.Controllers.V1
         [SwaggerOperation("Get token")]
         public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest, CancellationToken cancellationToken)
         {
+            throw new Exception("kjhvhgcgc");
             var result = await AcountService.Login(loginRequest, cancellationToken);
             if (!result.IsSuccess)
                 return BadRequest(result);
