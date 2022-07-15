@@ -32,7 +32,6 @@ namespace SinaRazavi_Test.Controllers.V1
         [SwaggerOperation("Get token")]
         public async Task<IActionResult> Login([FromForm] LoginRequest loginRequest, CancellationToken cancellationToken)
         {
-            throw new Exception("kjhvhgcgc");
             var result = await AcountService.Login(loginRequest, cancellationToken);
             if (!result.IsSuccess)
                 return BadRequest(result);
