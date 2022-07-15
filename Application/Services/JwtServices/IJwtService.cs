@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
-using Domain.IdentityModel;
+using Application.Dto.UserDto;
+using Domain.Common.DependencyLifeTime;
+using Domain.Entities.IdentityModel;
 
 namespace Application.Services.JwtServices
 {
-    public interface IJwtService
+    public interface IJwtService : IScopedService
     {
-        Task<string> GenerateAsync(User user);
+        Task<TokenModel> GenerateAsync(User user);
     }
 }

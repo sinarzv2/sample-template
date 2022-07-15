@@ -1,6 +1,8 @@
-﻿namespace Application.Services.DataInitializer
+﻿using Domain.Common.DependencyLifeTime;
+
+namespace Application.Services.DataInitializer
 {
-    public interface IDataInitializer 
+    public interface IDataInitializer : IScopedService
     {
         void InitializeData();
     }

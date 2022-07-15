@@ -4,11 +4,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.IRepository;
+using Infrastructure.IRepository;
 using Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Repository
+namespace Infrastructure.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     

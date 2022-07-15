@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Application.IRepository;
-using Domain.IdentityModel;
+﻿using Domain.Entities.IdentityModel;
+using Infrastructure.IRepository;
 using Infrastructure.Persistance;
-using Microsoft.EntityFrameworkCore;
 
-namespace Application.Repository
+namespace Infrastructure.Repository
 {
     public class RoleRepository : Repository<Role>, IRoleRepository
     {

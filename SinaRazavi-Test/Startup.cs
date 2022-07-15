@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Application.IRepository;
 using Application.Mapper;
-using Application.Repository;
+using Application.Services.AcountServices;
 using Application.Services.DataInitializer;
 using Application.Services.JwtServices;
 using Domain.Common;
+using Domain.Common.DependencyLifeTime;
+using Infrastructure.IRepository;
+using Infrastructure.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -42,13 +44,27 @@ namespace SinaRazavi_Test
             services.AddJwtAuthentication(_siteSettings.JwtSettings);
             services.AddSwagger();
             services.AddAutoMapper(typeof(UserMapper));
+            services.AddApiVersioning();
 
-            services.AddScoped<IJwtService, JwtService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
 
-            services.AddScoped<IDataInitializer, RoleDataInitializer>();
-            services.AddScoped<IDataInitializer, UserDataInitializer>();
+            services.Scan(scan => scan
+                .FromAssemblyOf<AcountService>()
+                .AddClasses(classes => classes.AssignableTo<ITransientService>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+
+                .AddClasses(classes => classes.AssignableTo<IScopedService>())
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
+
+                .FromAssemblyOf<UserRepository>()
+                .AddClasses(classes => classes.AssignableTo<ITransientService>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+
+                .AddClasses(classes => classes.AssignableTo<IScopedService>())
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

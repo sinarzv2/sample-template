@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Domain.Common.Constant;
+﻿using Domain.Common.Constant;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace SinaRazavi_Test.Controllers
+namespace SinaRazavi_Test.Controllers.V1
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [ApiVersion("1")]
+    public class WeatherForecastController : BaseV1Controller
     {
         private static readonly string[] Summaries = new[]
         {
@@ -27,7 +25,7 @@ namespace SinaRazavi_Test.Controllers
 
         [HttpGet]
         [Authorize(Roles = ConstantRoles.Admin)]
-        public IEnumerable<WeatherForecast> Get()
+        public virtual IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

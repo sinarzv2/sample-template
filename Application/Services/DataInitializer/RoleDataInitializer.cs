@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Application.IRepository;
 using Domain.Common.Constant;
-using Domain.IdentityModel;
+using Domain.Entities.IdentityModel;
+using Infrastructure.IRepository;
 
 namespace Application.Services.DataInitializer
 {

@@ -38,7 +38,8 @@ namespace SinaRazavi_Test.Extentions
             });
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/version1/swagger.json", "Doc-v1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Doc-v1");
+                options.SwaggerEndpoint("/swagger/v2/swagger.json", "Doc-v2");
                 options.DocExpansion(DocExpansion.None);
                 options.RoutePrefix = "";
             });

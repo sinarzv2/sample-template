@@ -1,6 +1,6 @@
-﻿using Application.Dto;
+﻿using Application.Dto.UserDto;
 using AutoMapper;
-using Domain.IdentityModel;
+using Domain.Entities.IdentityModel;
 
 namespace Application.Mapper
 {
@@ -8,7 +8,7 @@ namespace Application.Mapper
     {
         public UserMapper()
         {
-            CreateMap<UserDto, User>().ReverseMap();
+            CreateMap<RegisterRequest, User>().ReverseMap();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Domain.IdentityModel;
+﻿using Domain.Entities.IdentityModel;
 
-namespace Application.IRepository
+namespace Infrastructure.IRepository
 {
     public interface IRoleRepository :IRepository<Role>
     {

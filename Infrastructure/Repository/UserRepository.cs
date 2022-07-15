@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Application.IRepository;
-using Domain.IdentityModel;
+﻿using Domain.Entities.IdentityModel;
+using Infrastructure.IRepository;
 using Infrastructure.Persistance;
 
-namespace Application.Repository
+namespace Infrastructure.Repository
 {
     public class UserRepository : Repository<User>, IUserRepository
     {

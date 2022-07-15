@@ -1,8 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 
-namespace Domain.IdentityModel
+namespace Domain.Entities.IdentityModel
 {
     public class User : IdentityUser<Guid>
     {
@@ -13,10 +12,11 @@ namespace Domain.IdentityModel
 
 
         public string FullName { get; set; }
-        public int Age { get; set; }
+        public DateTime BirthDate { get; set; }
   
         public bool IsActive { get; set; }
-        
+
+    
     }
 
  

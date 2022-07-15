@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.IRepository;
 using Domain.Common;
-using Domain.IdentityModel;
+using Domain.Entities.IdentityModel;
+using Infrastructure.IRepository;
 using Infrastructure.Persistance;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SinaRazavi_Test.Common.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SinaRazavi_Test.Extentions
@@ -35,17 +41,17 @@ namespace SinaRazavi_Test.Extentions
         {
             service.AddIdentity<User, Role>(identityOptions =>
                 {
-                   
+
                     identityOptions.Password.RequireDigit = settings.PasswordRequireDigit;
                     identityOptions.Password.RequiredLength = settings.PasswordRequiredLength;
-                    identityOptions.Password.RequireNonAlphanumeric = settings.PasswordRequireNonAlphanumic; //#@!
+                    identityOptions.Password.RequireNonAlphanumeric = settings.PasswordRequireNonAlphanumic;
                     identityOptions.Password.RequireUppercase = settings.PasswordRequireUppercase;
                     identityOptions.Password.RequireLowercase = settings.PasswordRequireLowercase;
 
-                   
+
                     identityOptions.User.RequireUniqueEmail = settings.RequireUniqueEmail;
 
-              
+
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -66,7 +72,7 @@ namespace SinaRazavi_Test.Extentions
 
                 var validationParameters = new TokenValidationParameters
                 {
-                    ClockSkew = TimeSpan.Zero, 
+                    ClockSkew = TimeSpan.Zero,
                     RequireSignedTokens = true,
 
                     ValidateIssuerSigningKey = true,
@@ -75,7 +81,7 @@ namespace SinaRazavi_Test.Extentions
                     RequireExpirationTime = true,
                     ValidateLifetime = true,
 
-                    ValidateAudience = true, 
+                    ValidateAudience = true,
                     ValidAudience = jwtSettings.Audience,
 
                     ValidateIssuer = true,
@@ -91,34 +97,22 @@ namespace SinaRazavi_Test.Extentions
                 {
                     OnAuthenticationFailed = context =>
                     {
-                        
-                        if (context.Exception != null)
-                            throw new Exception("Authentication failed.");
-
-                        return Task.CompletedTask;
-                    },
-                    OnTokenValidated = async context =>
-                    {
-                        var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
-
-                        var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
-                        if (claimsIdentity.Claims?.Any() != true)
-                            context.Fail("This token has no claims.");
-
-                        var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                        var user = await userRepository.GetByIdAsync(CancellationToken.None,Guid.Parse(userId.Value));
-                        if (!user.IsActive)
-                            context.Fail("User is not active.");
-
-                        
+                        context.Response.StatusCode = 401;
+                        context.Response.ContentType = "application/json";
+                        var apiResult = new ApiResult();
+                        apiResult.AddError("احراز هویت ناموفق بود.");
+                        var result = JsonSerializer.Serialize(apiResult);
+                        return context.Response.WriteAsync(result);
                     },
                     OnChallenge = context =>
                     {
-
-                        if (context.AuthenticateFailure != null)
-                            throw new Exception("Authenticate failure.");
-                        throw new Exception("You are unauthorized to access this resource.");
-
+                        context.HandleResponse();
+                        context.Response.StatusCode = 401;
+                        context.Response.ContentType = "application/json";
+                        var apiResult = new ApiResult();
+                        apiResult.AddError("شما وارد نشده اید.");
+                        var result = JsonSerializer.Serialize(apiResult);
+                        return context.Response.WriteAsync(result);
                     }
                 };
             });
@@ -127,36 +121,53 @@ namespace SinaRazavi_Test.Extentions
         {
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("version1", new OpenApiInfo() { Version = "version1", Title = " Version1" });
-
+                options.SwaggerDoc("v1", new OpenApiInfo() { Version = "v1", Title = " Version1" });
+                options.SwaggerDoc("v2", new OpenApiInfo() { Version = "v2", Title = " Version2" });
+            
                 options.IgnoreObsoleteActions();
                 options.IgnoreObsoleteProperties();
 
+                options.EnableAnnotations();
+
+
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows()
+                    {
+                        Password = new OpenApiOAuthFlow()
+                        {
+                            TokenUrl = new Uri("/api/v1/user/login", UriKind.Relative),
+
+                        }
+                    }
                 });
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
+                    { new OpenApiSecurityScheme()
                     {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    Array.Empty<string>()
-                    }
+                        Reference = new OpenApiReference(){Type = ReferenceType.SecurityScheme,Id = "Bearer"}
+                    }, new string[] { } }
                 });
 
-             
+               
+
+
+                options.OperationFilter<RemoveVersionParameters>();
+
+                options.DocumentFilter<SetVersionInPaths>();
+
+                options.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    if (!apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
+
+                    var versions = methodInfo?.DeclaringType?
+                        .GetCustomAttributes<ApiVersionAttribute>(true)
+                        .SelectMany(attr => attr.Versions);
+
+                    return (versions ?? Array.Empty<ApiVersion>()).Any(v => $"v{v}" == docName);
+                });
             });
         }
     }

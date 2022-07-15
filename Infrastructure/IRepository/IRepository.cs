@@ -4,11 +4,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain.Common.DependencyLifeTime;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.IRepository
+namespace Infrastructure.IRepository
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity>: IScopedService where TEntity : class
     {
         DbSet<TEntity> Entities { get; }
         IQueryable<TEntity> Table { get; }

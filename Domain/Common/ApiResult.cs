@@ -15,7 +15,6 @@ namespace Domain.Common
             IsSuccess = true;
         }
         public bool IsSuccess { get; private set; }
-        public ApiResultStatusCode? Status { get; set; }
         public IReadOnlyList<string> Successes => _successes;
         public IReadOnlyList<string> Errors => _errors;
 
@@ -87,11 +86,11 @@ namespace Domain.Common
         public TData Data { get; set; }
    
 
-        public void Success(TData data)
+        public ApiResult<TData> Success(TData data)
         {
-            Status = ApiResultStatusCode.Success;
             Data = data;
             AddSuccess(ApiResultStatusCode.Success.ToDisplay());
+            return this;
         }
     }
 

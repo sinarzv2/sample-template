@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using Domain.Common.Constant;
-using Domain.IdentityModel;
+﻿using Domain.Common.Constant;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Linq;
+using Domain.Entities.IdentityModel;
 
 namespace Application.Services.DataInitializer
 {
