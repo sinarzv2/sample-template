@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json.Serialization;
 
-namespace Application.Dto.UserDto
+namespace Application.Account.Dto
 {
     public class TokenModel
     {

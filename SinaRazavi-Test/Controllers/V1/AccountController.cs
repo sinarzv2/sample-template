@@ -1,14 +1,16 @@
 ﻿using System;
-using Application.Dto.UserDto;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Services.AcountServices;
 using Swashbuckle.AspNetCore.Annotations;
+using Application.Account.Dto;
+using Application.Account.Services;
+using SinaRazavi_Test.Filters;
 
 namespace SinaRazavi_Test.Controllers.V1
 {
     [ApiVersion("1")]
+    [ApiResultFilter]
     public class AccountController : BaseV1Controller
     {
 

@@ -1,11 +1,4 @@
-using Application.Dto.UserDto;
-using Application.Services.AcountServices;
 using Domain.Common;
-using Domain.Common.DependencyLifeTime;
-using Domain.Entities.IdentityModel;
-using Infrastructure.Repository;
-using Mapster;
-using MapsterMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -47,6 +40,7 @@ namespace SinaRazavi_Test
             services.AddMapster();
 
             services.AddScrutor();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

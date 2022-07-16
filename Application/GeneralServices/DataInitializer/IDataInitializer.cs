@@ -1,6 +1,6 @@
 ﻿using Domain.Common.DependencyLifeTime;
 
-namespace Application.Services.DataInitializer
+namespace Application.GeneralServices.DataInitializer
 {
     public interface IDataInitializer : IScopedService
     {

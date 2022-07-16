@@ -1,5 +1,4 @@
-﻿using Application.Services.AcountServices;
-using Domain.Common;
+﻿using Domain.Common;
 using Domain.Common.DependencyLifeTime;
 using Domain.Entities.IdentityModel;
 using Infrastructure.Persistance;
@@ -22,6 +21,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using Application.Account.Services;
 
 namespace SinaRazavi_Test.Extentions
 {
@@ -134,7 +134,7 @@ namespace SinaRazavi_Test.Extentions
                     {
                         Password = new OpenApiOAuthFlow()
                         {
-                            TokenUrl = new Uri("/api/v1/user/login", UriKind.Relative),
+                            TokenUrl = new Uri("/api/v1/account/login", UriKind.Relative),
 
                         }
                     }
@@ -179,7 +179,7 @@ namespace SinaRazavi_Test.Extentions
         public static void AddScrutor(this IServiceCollection services)
         {
             services.Scan(scan => scan
-                .FromAssemblyOf<AcountService>()
+                .FromAssemblyOf<AccountService>()
                 .AddClasses(classes => classes.AssignableTo<ITransientService>())
                 .AsImplementedInterfaces()
                 .WithTransientLifetime()

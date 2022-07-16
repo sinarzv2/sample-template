@@ -1,10 +1,10 @@
-﻿using Domain.Common.Constant;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Linq;
+using Domain.Common.Constant;
 using Domain.Entities.IdentityModel;
+using Microsoft.AspNetCore.Identity;
 
-namespace Application.Services.DataInitializer
+namespace Application.GeneralServices.DataInitializer
 {
     public class UserDataInitializer : IDataInitializer
     {

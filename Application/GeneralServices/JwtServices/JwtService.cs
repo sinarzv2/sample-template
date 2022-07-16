@@ -4,14 +4,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Application.Dto.UserDto;
+using Application.Account.Dto;
 using Domain.Common;
 using Domain.Entities.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Application.Services.JwtServices
+namespace Application.GeneralServices.JwtServices
 {
     public class JwtService :IJwtService
     {

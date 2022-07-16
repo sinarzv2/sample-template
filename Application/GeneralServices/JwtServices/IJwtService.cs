@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Application.Dto.UserDto;
+using Application.Account.Dto;
 using Domain.Common.DependencyLifeTime;
 using Domain.Entities.IdentityModel;
 
-namespace Application.Services.JwtServices
+namespace Application.GeneralServices.JwtServices
 {
     public interface IJwtService : IScopedService
     {

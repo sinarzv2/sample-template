@@ -2,38 +2,39 @@
 using Domain.Common.Constant;
 using Domain.Entities.IdentityModel;
 using Infrastructure.IRepository;
+using Infrastructure.UnitOfWork;
 
-namespace Application.Services.DataInitializer
+namespace Application.GeneralServices.DataInitializer
 {
     public class RoleDataInitializer : IDataInitializer
     {
-        protected  IRoleRepository RoleRepository { get; }
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RoleDataInitializer(IRoleRepository roleRepository)
+        public RoleDataInitializer(IUnitOfWork unitOfWork)
         {
-            RoleRepository = roleRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public void InitializeData()
         {
-            if (!RoleRepository.TableNoTracking.Any(p => p.Name == ConstantRoles.Admin))
+            if (!_unitOfWork.RoleRepository.TableNoTracking.Any(p => p.Name == ConstantRoles.Admin))
             {
-                RoleRepository.Add(new Role()
+                _unitOfWork.RoleRepository.Add(new Role()
                 {
                     Name = ConstantRoles.Admin,
                     NormalizedName = ConstantRoles.Admin.ToUpper()
                 });
             }
-            if (!RoleRepository.TableNoTracking.Any(p => p.Name == ConstantRoles.User))
+            if (!_unitOfWork.RoleRepository.TableNoTracking.Any(p => p.Name == ConstantRoles.User))
             {
-                RoleRepository.Add(new Role()
+                _unitOfWork.RoleRepository.Add(new Role()
                 {
                     Name = ConstantRoles.User,
                     NormalizedName = ConstantRoles.User.ToUpper()
                 });
             }
 
-            RoleRepository.SaveChanges();
+            _unitOfWork.CommitChangesAsync().Wait();
         }
     }
 }

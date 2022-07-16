@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Application.Dto.UserDto
+namespace Application.Account.Dto
 {
     public class LoginRequest
     {

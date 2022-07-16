@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.IRepository
 {
-    public interface IRepository<TEntity>: IScopedService where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class
     {
         DbSet<TEntity> Entities { get; }
         IQueryable<TEntity> Table { get; }

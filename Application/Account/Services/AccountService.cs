@@ -1,22 +1,22 @@
-﻿using Application.Dto.UserDto;
-using Application.Services.JwtServices;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Application.Account.Dto;
+using Application.GeneralServices.JwtServices;
 using Domain.Common;
 using Domain.Common.Constant;
 using Domain.Entities.IdentityModel;
 using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Application.Services.AcountServices
+namespace Application.Account.Services
 {
-    public class AcountService : IAcountService
+    public class AccountService : IAcountService
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
-        public AcountService(UserManager<User> userManager, IMapper mapper, IJwtService jwtService)
+        public AccountService(UserManager<User> userManager, IMapper mapper, IJwtService jwtService)
         {
             _userManager = userManager;
             _mapper = mapper;

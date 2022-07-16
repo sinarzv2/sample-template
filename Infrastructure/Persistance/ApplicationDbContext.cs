@@ -57,11 +57,11 @@ namespace Infrastructure.Persistance
             foreach (var entityEntry in entries)
             {
                 entityEntry.Property("UpdatedDate").CurrentValue = DateTime.Now;
-                entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext.User.Identity?.Name;
+                entityEntry.Property("UpdatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User.Identity?.Name;
 
                 if (entityEntry.State == EntityState.Added)
                 {
-                    entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext.User.Identity?.Name;
+                    entityEntry.Property("CreatedBy").CurrentValue = _httpContextAccessor.HttpContext?.User.Identity?.Name;
                     entityEntry.Property("CreatedDate").CurrentValue = DateTime.Now;
                 }
             }
