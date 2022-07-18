@@ -1,10 +1,17 @@
-﻿using Domain.Common.Constant;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Common.Constant;
+using Common.Utilities;
+using Domain.Entities.IdentityModel;
+using Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Identity;
+using SinaRazavi_Test.Filters;
 
 namespace SinaRazavi_Test.Controllers.V1
 {
@@ -17,16 +24,23 @@ namespace SinaRazavi_Test.Controllers.V1
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly UserManager<User> _userManager;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, UserManager<User> userManager)
         {
             _logger = logger;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        [Authorize(Roles = ConstantRoles.Admin)]
-        public virtual IEnumerable<WeatherForecast> Get()
+        [CustomAuthorize("WeatherForecast.Get")]
+        public virtual async Task<IEnumerable<WeatherForecast>> Get()
         {
+            var d = User.Identity as ClaimsIdentity;
+            var f = d.Claims.ToList();
+
+            var user =  await _userManager.FindByIdAsync(User.Identity.GetUserId());
+            var roles = await _userManager.GetRolesAsync(user);
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

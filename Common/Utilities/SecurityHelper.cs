@@ -1,8 +1,7 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Domain.Common.Utilities
+namespace Common.Utilities
 {
     public static class SecurityHelper
     {

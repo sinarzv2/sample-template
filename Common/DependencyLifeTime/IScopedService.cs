@@ -1,4 +1,4 @@
-﻿namespace Domain.Common.DependencyLifeTime
+﻿namespace Common.DependencyLifeTime
 {
     public interface IScopedService
     {

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Domain.Common;
+using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

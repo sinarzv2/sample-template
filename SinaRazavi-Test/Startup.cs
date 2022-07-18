@@ -1,4 +1,4 @@
-using Domain.Common;
+using Common.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,7 +33,7 @@ namespace SinaRazavi_Test
 
             services.AddJwtAuthentication(_siteSettings.JwtSettings);
 
-            services.AddSwagger();
+            services.AddSwagger(_siteSettings);
 
             services.AddApiVersioning();
 

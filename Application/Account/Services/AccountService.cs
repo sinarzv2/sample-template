@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Account.Dto;
 using Application.GeneralServices.JwtServices;
-using Domain.Common;
-using Domain.Common.Constant;
+using Common.Constant;
+using Common.Models;
+using Common.Resources.Messages;
 using Domain.Entities.IdentityModel;
 using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
@@ -51,14 +53,14 @@ namespace Application.Account.Services
             var user = await _userManager.FindByNameAsync(loginRequest.UserName);
             if (user == null)
             {
-                result.AddError("نام کاربری و رمز عبور اشتباه است.");
+                result.AddError(Errors.InvalidUsernameOrPassword);
                 return result;
             }
 
             var isPassValid = await _userManager.CheckPasswordAsync(user, loginRequest.Password);
             if (!isPassValid)
             {
-                result.AddError("نام کاربری و رمز عبور اشتباه است.");
+                result.AddError(Errors.InvalidUsernameOrPassword);
                 return result;
             }
             result.Data = await _jwtService.GenerateAsync(user);

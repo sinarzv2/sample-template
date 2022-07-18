@@ -1,9 +1,10 @@
-﻿namespace Domain.Common
+﻿namespace Common.Models
 {
     public class SiteSettings
     {
         public JwtSettings JwtSettings { get; set; }
         public IdentitySettings IdentitySettings { get; set; }
+        public string LoginUrl { get; set; }
     }
     public class IdentitySettings
     {

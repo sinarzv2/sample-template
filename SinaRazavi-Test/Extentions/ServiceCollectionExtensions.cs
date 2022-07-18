@@ -1,6 +1,4 @@
-﻿using Domain.Common;
-using Domain.Common.DependencyLifeTime;
-using Domain.Entities.IdentityModel;
+﻿using Domain.Entities.IdentityModel;
 using Infrastructure.Persistance;
 using Infrastructure.Repository;
 using Mapster;
@@ -22,6 +20,9 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using Application.Account.Services;
+using Common.DependencyLifeTime;
+using Common.Resources.Messages;
+using Common.Models;
 
 namespace SinaRazavi_Test.Extentions
 {
@@ -38,17 +39,12 @@ namespace SinaRazavi_Test.Extentions
         {
             service.AddIdentity<User, Role>(identityOptions =>
                 {
-
                     identityOptions.Password.RequireDigit = settings.PasswordRequireDigit;
                     identityOptions.Password.RequiredLength = settings.PasswordRequiredLength;
                     identityOptions.Password.RequireNonAlphanumeric = settings.PasswordRequireNonAlphanumic;
                     identityOptions.Password.RequireUppercase = settings.PasswordRequireUppercase;
                     identityOptions.Password.RequireLowercase = settings.PasswordRequireLowercase;
-
-
                     identityOptions.User.RequireUniqueEmail = settings.RequireUniqueEmail;
-
-
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -97,7 +93,7 @@ namespace SinaRazavi_Test.Extentions
                         context.Response.StatusCode = 401;
                         context.Response.ContentType = "application/json";
                         var apiResult = new ApiResult();
-                        apiResult.AddError("احراز هویت ناموفق بود.");
+                        apiResult.AddError(Errors.AuthenticationFailed);
                         var result = JsonSerializer.Serialize(apiResult);
                         return context.Response.WriteAsync(result);
                     },
@@ -107,14 +103,14 @@ namespace SinaRazavi_Test.Extentions
                         context.Response.StatusCode = 401;
                         context.Response.ContentType = "application/json";
                         var apiResult = new ApiResult();
-                        apiResult.AddError("شما وارد نشده اید.");
+                        apiResult.AddError(Errors.YouAreNotLoggedIn);
                         var result = JsonSerializer.Serialize(apiResult);
                         return context.Response.WriteAsync(result);
                     }
                 };
             });
         }
-        public static void AddSwagger(this IServiceCollection services)
+        public static void AddSwagger(this IServiceCollection services, SiteSettings siteSettings)
         {
             services.AddSwaggerGen(options =>
             {
@@ -134,8 +130,7 @@ namespace SinaRazavi_Test.Extentions
                     {
                         Password = new OpenApiOAuthFlow()
                         {
-                            TokenUrl = new Uri("/api/v1/account/login", UriKind.Relative),
-
+                            TokenUrl = new Uri(siteSettings.LoginUrl, UriKind.Relative)
                         }
                     }
                 });
@@ -148,9 +143,7 @@ namespace SinaRazavi_Test.Extentions
                     }, new string[] { } }
                 });
 
-               
-
-
+                
                 options.OperationFilter<RemoveVersionParameters>();
 
                 options.DocumentFilter<SetVersionInPaths>();

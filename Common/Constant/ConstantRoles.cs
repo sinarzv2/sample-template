@@ -1,4 +1,4 @@
-﻿namespace Domain.Common.Constant
+﻿namespace Common.Constant
 {
     public class ConstantRoles
     {

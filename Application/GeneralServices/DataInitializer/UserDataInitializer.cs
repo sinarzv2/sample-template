@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Domain.Common.Constant;
+using Common.Constant;
 using Domain.Entities.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 

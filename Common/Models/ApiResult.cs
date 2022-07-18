@@ -1,8 +1,7 @@
-﻿using Domain.Common.Utilities;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Text.Json.Serialization;
+using Common.Utilities;
 
-namespace Domain.Common
+namespace Common.Models
 {
     public class ApiResult
     {
@@ -21,9 +20,9 @@ namespace Domain.Common
         public void AddError(string message)
         {
             message = message.CleanString();
-            if(message == null)
+            if (message == null)
                 return;
-            if(_errors.Contains(message))
+            if (_errors.Contains(message))
                 return;
             _errors.Add(message);
             IsSuccess = false;
@@ -83,16 +82,17 @@ namespace Domain.Common
     public class ApiResult<TData> : ApiResult
         where TData : class
     {
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public TData Data { get; set; }
-   
 
-        public ApiResult<TData> Success(TData data)
+
+        public ApiResult<TData> Success(TData data, string message)
         {
             Data = data;
-            AddSuccess(ApiResultStatusCode.Success.ToDisplay());
+            AddSuccess(message);
             return this;
         }
     }
 
-    
+
 }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
+﻿using System.Collections;
 
-namespace Domain.Common.Utilities
+namespace Common.Utilities
 {
     public static class Assert
     {

@@ -1,4 +1,4 @@
-﻿using Domain.Common.DependencyLifeTime;
+﻿using Common.DependencyLifeTime;
 
 namespace Application.GeneralServices.DataInitializer
 {

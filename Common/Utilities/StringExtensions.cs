@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Domain.Common.Utilities
+﻿namespace Common.Utilities
 {
     public static class StringExtensions
     {

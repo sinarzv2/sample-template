@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace Domain.Common.Utilities
+namespace Common.Utilities
 {
     public static class EnumExtensions
     {

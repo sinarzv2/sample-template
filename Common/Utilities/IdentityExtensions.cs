@@ -1,9 +1,8 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Security.Claims;
 using System.Security.Principal;
 
-namespace Domain.Common.Utilities
+namespace Common.Utilities
 {
     public static class IdentityExtensions
     {
@@ -16,6 +15,12 @@ namespace Domain.Common.Utilities
         {
             var claimsIdentity = identity as ClaimsIdentity;
             return claimsIdentity?.FindFirstValue(claimType);
+        }
+
+        public static List<Claim> FindClaimByType(this IIdentity identity, string claimType)
+        {
+            var claimsIdentity = identity as ClaimsIdentity;
+            return claimsIdentity?.Claims.Where(d => d.Type ==claimType).ToList();
         }
 
         public static string GetUserId(this IIdentity identity)

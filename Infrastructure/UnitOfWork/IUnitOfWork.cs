@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Common.DependencyLifeTime;
+using Common.DependencyLifeTime;
 using Infrastructure.IRepository;
 
 namespace Infrastructure.UnitOfWork

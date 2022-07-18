@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.Account.Dto;
-using Domain.Common;
-using Domain.Common.DependencyLifeTime;
+using Common.DependencyLifeTime;
+using Common.Models;
 
 namespace Application.Account.Services
 {

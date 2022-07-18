@@ -4,7 +4,8 @@ using System.Globalization;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Domain.Common;
+using Common.Models;
+using Common.Resources.Messages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -70,6 +71,10 @@ namespace SinaRazavi_Test.Common.Middlewares
                         ["StackTrace"] = exception.StackTrace,
                     };
                     message = JsonSerializer.Serialize(dic);
+                }
+                else
+                {
+                    message = Errors.UnexpectedError;
                 }
                 await WriteToResponseAsync();
             }
