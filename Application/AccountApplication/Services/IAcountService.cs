@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Account.Dto;
+using Application.AccountApplication.Dto;
 using Common.DependencyLifeTime;
 using Common.Models;
 
-namespace Application.Account.Services
+namespace Application.AccountApplication.Services
 {
     public interface IAcountService : IScopedService
     {

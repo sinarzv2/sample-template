@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.AccountApplication.Dto;
+using Application.AccountApplication.Services;
 using Swashbuckle.AspNetCore.Annotations;
-using Application.Account.Dto;
-using Application.Account.Services;
 using SinaRazavi_Test.Filters;
 
 namespace SinaRazavi_Test.Controllers.V1

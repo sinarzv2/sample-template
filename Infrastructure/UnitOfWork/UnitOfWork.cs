@@ -15,11 +15,13 @@ namespace Infrastructure.UnitOfWork
             _context = databaseContext;
             UserRepository = new UserRepository(_context);
             RoleRepository = new RoleRepository(_context);
+            UserClaimRepository = new UserClaimRepository(_context);
         }
 
 
         public IUserRepository UserRepository { get; }
         public IRoleRepository RoleRepository { get; }
+        public IUserClaimRepository UserClaimRepository { get; }
 
         public async Task CommitChangesAsync(CancellationToken cancellationToken = default)
         {

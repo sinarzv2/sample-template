@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Application.Account.Dto;
+using Application.AccountApplication.Dto;
 using Common.Constant;
 using Common.Models;
 using Domain.Entities.IdentityModel;
@@ -51,8 +51,8 @@ namespace Application.GeneralServices.JwtServices
         private async Task<IEnumerable<Claim>> GetClaimsAsync(User user)
         {
             var result = await _signInManager.ClaimsFactory.CreateAsync(user);
-            return result.Claims;
-           
+            return _siteSettings.UseTokenClaim ?  result.Claims : 
+                result.Claims.Where(d => d.Type != ConstantClaim.Permission && d.Type != ClaimTypes.Role);
         }
     }
 

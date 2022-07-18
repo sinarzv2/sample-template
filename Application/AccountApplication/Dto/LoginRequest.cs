@@ -1,8 +1,8 @@
-﻿using Common.Resources;
+﻿using System.ComponentModel.DataAnnotations;
+using Common.Resources;
 using Common.Resources.Messages;
-using System.ComponentModel.DataAnnotations;
 
-namespace Application.Account.Dto
+namespace Application.AccountApplication.Dto
 {
     public class LoginRequest
     {

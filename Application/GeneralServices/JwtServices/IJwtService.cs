@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Application.Account.Dto;
+using Application.AccountApplication.Dto;
 using Common.DependencyLifeTime;
 using Domain.Entities.IdentityModel;
 

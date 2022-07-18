@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Common.Resources;
 using Common.Resources.Messages;
 
-namespace Application.Account.Dto
+namespace Application.AccountApplication.Dto
 {
     public class RegisterRequest
     {

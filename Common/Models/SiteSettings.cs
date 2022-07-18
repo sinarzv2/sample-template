@@ -5,6 +5,7 @@
         public JwtSettings JwtSettings { get; set; }
         public IdentitySettings IdentitySettings { get; set; }
         public string LoginUrl { get; set; }
+        public bool UseTokenClaim { get; set; }
     }
     public class IdentitySettings
     {

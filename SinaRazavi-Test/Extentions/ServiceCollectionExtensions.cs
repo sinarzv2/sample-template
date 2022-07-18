@@ -19,7 +19,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using Application.Account.Services;
+using Application.AccountApplication.Services;
 using Common.DependencyLifeTime;
 using Common.Resources.Messages;
 using Common.Models;
@@ -33,6 +33,7 @@ namespace SinaRazavi_Test.Extentions
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+                options.LogTo(Console.WriteLine);
             });
         }
         public static void AddCustomIdentity(this IServiceCollection service, IdentitySettings settings)

@@ -10,6 +10,7 @@ namespace Infrastructure.UnitOfWork
     {
         IUserRepository UserRepository { get; }
         IRoleRepository RoleRepository { get; }
+        IUserClaimRepository UserClaimRepository { get; }
         Task CommitChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -21,6 +21,9 @@ namespace Infrastructure.Persistance
             _httpContextAccessor = httpContextAccessor;
         }
 
+
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())

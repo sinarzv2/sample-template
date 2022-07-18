@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Account.Dto;
+using Application.AccountApplication.Dto;
 using Application.GeneralServices.JwtServices;
 using Common.Constant;
 using Common.Models;
@@ -11,7 +10,7 @@ using Domain.Entities.IdentityModel;
 using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
 
-namespace Application.Account.Services
+namespace Application.AccountApplication.Services
 {
     public class AccountService : IAcountService
     {
