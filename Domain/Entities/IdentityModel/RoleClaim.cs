@@ -5,7 +5,7 @@ namespace Domain.Entities.IdentityModel
 {
     public class RoleClaim : IdentityRoleClaim<Guid>
     {
-     
+        public new Guid Id { get; set; }
     }
   
 }

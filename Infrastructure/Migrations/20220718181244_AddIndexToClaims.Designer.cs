@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220715181346_AddModifiedDateToTables")]
-    partial class AddModifiedDateToTables
+    [Migration("20220718181244_AddIndexToClaims")]
+    partial class AddIndexToClaims
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,17 +74,16 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.IdentityModel.RoleClaim", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(100)
@@ -106,6 +105,10 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("ClaimType", "ClaimValue")
+                        .IsUnique()
+                        .HasFilter("[ClaimType] IS NOT NULL AND [ClaimValue] IS NOT NULL");
 
                     b.ToTable("RoleClaims", (string)null);
                 });
@@ -207,17 +210,16 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.IdentityModel.UserClaim", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(100)
@@ -239,6 +241,10 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("ClaimType", "ClaimValue")
+                        .IsUnique()
+                        .HasFilter("[ClaimType] IS NOT NULL AND [ClaimValue] IS NOT NULL");
 
                     b.ToTable("UserClaims", (string)null);
                 });

@@ -5,7 +5,8 @@ namespace Domain.Entities.IdentityModel
 {
     public class UserClaim : IdentityUserClaim<Guid>
     {
-        public override int Id { get; set; }
+        public new Guid Id { get; set; }
+
     }
    
 }
