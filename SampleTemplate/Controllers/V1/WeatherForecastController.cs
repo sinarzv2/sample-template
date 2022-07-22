@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Entities.IdentityModel;
 using Microsoft.AspNetCore.Identity;
-using SinaRazavi_Test.Filters;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using SampleTemplate.Filters;
 
-namespace SinaRazavi_Test.Controllers.V1
+namespace SampleTemplate.Controllers.V1
 {
     [ApiVersion("1")]
     public class WeatherForecastController : BaseV1Controller

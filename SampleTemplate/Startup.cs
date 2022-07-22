@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SinaRazavi_Test.Common.Middlewares;
-using SinaRazavi_Test.Extentions;
+using SampleTemplate.Common.Middlewares;
+using SampleTemplate.Extentions;
 
-namespace SinaRazavi_Test
+namespace SampleTemplate
 {
     public class Startup
     {

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace SinaRazavi_Test.Filters
+namespace SampleTemplate.Filters
 {
     public class CustomAuthorizeAttribute : Attribute, IAsyncAuthorizationFilter
     {

@@ -30,7 +30,7 @@ namespace Infrastructure.Persistance
             {
                 modelBuilder.Entity(entityType.ClrType)
                     .Property<DateTime>("CreatedDate")
-                    .IsRequired();
+                    .IsRequired().HasDefaultValueSql("GETDATE()");
                 modelBuilder.Entity(entityType.ClrType)
                     .Property<DateTime?>("UpdatedDate")
                     .IsRequired(false);

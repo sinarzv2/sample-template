@@ -1,6 +1,6 @@
 using System;
 
-namespace SinaRazavi_Test
+namespace SampleTemplate
 {
     public class WeatherForecast
     {

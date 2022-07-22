@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace SinaRazavi_Test
+namespace SampleTemplate
 {
     public class Program
     {

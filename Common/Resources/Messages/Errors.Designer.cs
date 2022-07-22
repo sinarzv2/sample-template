@@ -79,6 +79,24 @@ namespace Common.Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to رفرش توکن معتبر نمی باشد..
+        /// </summary>
+        public static string InvalidRefreshToken {
+            get {
+                return ResourceManager.GetString("InvalidRefreshToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to توکن معتبر نمی باشد..
+        /// </summary>
+        public static string InvalidToken {
+            get {
+                return ResourceManager.GetString("InvalidToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام کاربری یا رمز عبور اشتباه است..
         /// </summary>
         public static string InvalidUsernameOrPassword {
@@ -93,6 +111,15 @@ namespace Common.Resources.Messages {
         public static string UnexpectedError {
             get {
                 return ResourceManager.GetString("UnexpectedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کاربر پیدا نشد..
+        /// </summary>
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
             }
         }
         

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace SinaRazavi_Test.Controllers
+namespace SampleTemplate.Controllers
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]

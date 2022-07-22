@@ -1,4 +1,13 @@
-﻿using Domain.Entities.IdentityModel;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Text.Json;
+using Application.AccountApplication.Services;
+using Common.DependencyLifeTime;
+using Common.Models;
+using Common.Resources.Messages;
+using Domain.Entities.IdentityModel;
 using Infrastructure.Persistance;
 using Infrastructure.Repository;
 using Mapster;
@@ -12,19 +21,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SinaRazavi_Test.Common.Swagger;
+using SampleTemplate.Common.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
-using Application.AccountApplication.Services;
-using Common.DependencyLifeTime;
-using Common.Resources.Messages;
-using Common.Models;
 
-namespace SinaRazavi_Test.Extentions
+namespace SampleTemplate.Extentions
 {
     public static class ServiceCollectionExtensions
     {
@@ -144,7 +144,7 @@ namespace SinaRazavi_Test.Extentions
                     }, new string[] { } }
                 });
 
-                
+
                 options.OperationFilter<RemoveVersionParameters>();
 
                 options.DocumentFilter<SetVersionInPaths>();

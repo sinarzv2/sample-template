@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Application.AccountApplication.Dto;
 using Common.Constant;
 using Common.Models;
+using Common.Resources.Messages;
 using Domain.Entities.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -45,7 +47,49 @@ namespace Application.GeneralServices.JwtServices
      
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateJwtSecurityToken(descriptor);
-            return new TokenModel(securityToken);
+            var token = new TokenModel(securityToken)
+            {
+                RefreshToken = GenerateRefresToken()
+            };
+            return token;
+        }
+
+        public ApiResult<ClaimsPrincipal> GetPrincipalFromExpiredToken(string accessToken)
+        {
+            var result = new ApiResult<ClaimsPrincipal>();
+            var secretKey = Encoding.UTF8.GetBytes(_siteSettings.JwtSettings.SecretKey);
+
+            var encryptionkey = Encoding.UTF8.GetBytes(_siteSettings.JwtSettings.EncryptKey);
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidAudience = _siteSettings.JwtSettings.Audience,
+                ValidIssuer = _siteSettings.JwtSettings.Issuer,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                ValidateLifetime = false,
+                TokenDecryptionKey = new SymmetricSecurityKey(encryptionkey)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out var securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.Aes128KW,
+                    StringComparison.InvariantCultureIgnoreCase))
+            {
+                result.AddError(Errors.InvalidToken);
+                return result;
+            }
+            result.Data = principal;
+            return result;
+        }
+
+        private string GenerateRefresToken()
+        {
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
         }
 
         private async Task<IEnumerable<Claim>> GetClaimsAsync(User user)

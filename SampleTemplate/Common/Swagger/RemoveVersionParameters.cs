@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace SinaRazavi_Test.Common.Swagger
+namespace SampleTemplate.Common.Swagger
 {
     public class RemoveVersionParameters : IOperationFilter
     {

@@ -1,13 +1,15 @@
 ﻿using System;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.AccountApplication.Dto;
 using Application.AccountApplication.Services;
+using Common.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SampleTemplate.Filters;
 using Swashbuckle.AspNetCore.Annotations;
-using SinaRazavi_Test.Filters;
 
-namespace SinaRazavi_Test.Controllers.V1
+namespace SampleTemplate.Controllers.V1
 {
     [ApiVersion("1")]
     [ApiResultFilter]
@@ -40,6 +42,25 @@ namespace SinaRazavi_Test.Controllers.V1
             return Ok(result.Data);
         }
 
+        [HttpPost("[action]")]
+        [SwaggerOperation("Refresh Token")]
+        public async Task<IActionResult> Refresh(RefreshTokenRequest request, CancellationToken cancellationToken)
+        {
+            var result = await AcountService.Refresh(request, cancellationToken);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+            return Ok(result);
+        }
 
+        [HttpPost("[action]/{userid}")]
+        [CustomAuthorize("Account.Revoke")]
+        [SwaggerOperation("Revoke Token")]
+        public async Task<IActionResult> Revoke([FromRoute]Guid userid, CancellationToken cancellationToken)
+        {
+            var result = await AcountService.Revoke(userid, cancellationToken);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+            return NoContent();
+        }
     }
 }

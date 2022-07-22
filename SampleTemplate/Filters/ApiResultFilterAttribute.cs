@@ -3,7 +3,7 @@ using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace SinaRazavi_Test.Filters
+namespace SampleTemplate.Filters
 {
     public class ApiResultFilterAttribute : ActionFilterAttribute
     {

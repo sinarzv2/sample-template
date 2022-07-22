@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "SinaRazavi_Test": {
+    "SampleTemplate": {
       "commandName": "Project",
       "launchBrowser": true,
       

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Application.GeneralServices.DataInitializer;
 using Infrastructure.Persistance;
 using Microsoft.AspNetCore.Builder;
@@ -9,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace SinaRazavi_Test.Extentions
+namespace SampleTemplate.Extentions
 {
     public static class ApplicationBuilderExtensions
     {

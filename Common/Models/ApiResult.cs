@@ -48,6 +48,7 @@ namespace Common.Models
         public void CleareErrorMessages()
         {
             _errors.Clear();
+            IsSuccess = true;
         }
         public void AddSuccess(string message)
         {

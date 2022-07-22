@@ -123,11 +123,20 @@
   <data name="AuthorizationFaild" xml:space="preserve">
     <value>شما مجوز دسترسی ندارید.</value>
   </data>
+  <data name="InvalidRefreshToken" xml:space="preserve">
+    <value>رفرش توکن معتبر نمی باشد.</value>
+  </data>
+  <data name="InvalidToken" xml:space="preserve">
+    <value>توکن معتبر نمی باشد.</value>
+  </data>
   <data name="InvalidUsernameOrPassword" xml:space="preserve">
     <value>نام کاربری یا رمز عبور اشتباه است.</value>
   </data>
   <data name="UnexpectedError" xml:space="preserve">
     <value>خطای ناشناخته‌ای صورت گرفته است! لطفا با تیم پشتیبانی تماس حاصل فرمایید.</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>کاربر پیدا نشد.</value>
   </data>
   <data name="YouAreNotLoggedIn" xml:space="preserve">
     <value>شما وارد نشده اید.</value>

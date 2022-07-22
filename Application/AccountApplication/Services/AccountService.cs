@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.AccountApplication.Dto;
@@ -7,8 +8,10 @@ using Common.Constant;
 using Common.Models;
 using Common.Resources.Messages;
 using Domain.Entities.IdentityModel;
+using Infrastructure.UnitOfWork;
 using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 namespace Application.AccountApplication.Services
 {
@@ -17,11 +20,15 @@ namespace Application.AccountApplication.Services
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
-        public AccountService(UserManager<User> userManager, IMapper mapper, IJwtService jwtService)
+        private readonly JwtSettings _jwtSettings;
+        private readonly IUnitOfWork _unitOfWork;
+        public AccountService(UserManager<User> userManager, IMapper mapper, IJwtService jwtService,IOptionsSnapshot<SiteSettings> siteSetting, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _mapper = mapper;
             _jwtService = jwtService;
+            _unitOfWork = unitOfWork;
+            _jwtSettings = siteSetting.Value.JwtSettings;
         }
 
       
@@ -62,7 +69,54 @@ namespace Application.AccountApplication.Services
                 result.AddError(Errors.InvalidUsernameOrPassword);
                 return result;
             }
-            result.Data = await _jwtService.GenerateAsync(user);
+
+            var tokenModel = await _jwtService.GenerateAsync(user);
+            user.RefreshToken = tokenModel.RefreshToken;
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(_jwtSettings.ExpirationRefreshTimeDays);
+            await _unitOfWork.UserRepository.UpdateAsync(user);
+            await _unitOfWork.CommitChangesAsync(cancellationToken);
+            result.Data = tokenModel;
+            return result;
+        }
+
+        public async Task<ApiResult<TokenModel>> Refresh(RefreshTokenRequest request, CancellationToken cancellationToken)
+        {
+            var result = new ApiResult<TokenModel>();
+            var principal = _jwtService.GetPrincipalFromExpiredToken(request.AccessToken);
+            if (!principal.IsSuccess)
+            {
+                result.AddErrors(principal.Errors);
+                return result;
+            }
+            var user = await _userManager.FindByNameAsync(principal.Data.Identity?.Name);
+            if (user is null || user.RefreshToken != request.RefreshToken ||
+                user.RefreshTokenExpiryTime <= DateTime.Now)
+            {
+                result.AddError(Errors.InvalidRefreshToken);
+                return result;
+            }
+            var tokenModel = await _jwtService.GenerateAsync(user);
+            user.RefreshToken = tokenModel.RefreshToken;
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(_jwtSettings.ExpirationRefreshTimeDays);
+            await _unitOfWork.UserRepository.UpdateAsync(user);
+            await _unitOfWork.CommitChangesAsync(cancellationToken);
+            result.Data = tokenModel;
+            return result;
+        }
+
+        public async Task<ApiResult> Revoke(Guid userId, CancellationToken cancellationToken)
+        {
+            var result = new ApiResult();
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user is null)
+            {
+                result.AddError(Errors.UserNotFound);
+                return result;
+            }
+
+            user.RefreshToken = null;
+            await _unitOfWork.UserRepository.UpdateAsync(user);
+            await _unitOfWork.CommitChangesAsync(cancellationToken);
             return result;
         }
     }

@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
-namespace SinaRazavi_Test.Common.Middlewares
+namespace SampleTemplate.Common.Middlewares
 {
     public static class CustomExceptionHandlerMiddlewareExtention
     {

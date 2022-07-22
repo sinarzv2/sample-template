@@ -12,6 +12,7 @@ namespace Infrastructure.Persistance.Configuration.IdentityConfiguration
             builder.Property(p => p.UserName).IsRequired().HasMaxLength(100);
             builder.Property(p => p.FullName).IsRequired().HasMaxLength(100);
             builder.Property(p => p.PasswordHash).IsRequired().HasMaxLength(500);
+            builder.Property(p => p.RefreshToken).HasMaxLength(100);
             builder.ToTable("Users");
         }
     }
