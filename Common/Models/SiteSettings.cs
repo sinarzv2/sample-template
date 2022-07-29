@@ -4,8 +4,19 @@
     {
         public JwtSettings JwtSettings { get; set; }
         public IdentitySettings IdentitySettings { get; set; }
+        public RedisSettings RedisSettings { get; set; }
         public string LoginUrl { get; set; }
         public bool UseTokenClaim { get; set; }
+       
+    }
+
+    public class RedisSettings
+    {
+        public string Connection { get; set; }
+        public string InstanceName { get; set; }
+        public bool IsEnabled { get; set; }
+        public string Password { get; set; }
+
     }
     public class IdentitySettings
     {

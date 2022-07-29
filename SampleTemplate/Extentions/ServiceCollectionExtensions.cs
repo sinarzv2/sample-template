@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Application.AccountApplication.Services;
 using Common.DependencyLifeTime;
 using Common.Models;
@@ -22,7 +23,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SampleTemplate.Common.Swagger;
+using StackExchange.Redis;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Role = Domain.Entities.IdentityModel.Role;
 
 namespace SampleTemplate.Extentions
 {
@@ -117,7 +120,7 @@ namespace SampleTemplate.Extentions
             {
                 options.SwaggerDoc("v1", new OpenApiInfo() { Version = "v1", Title = " Version1" });
                 options.SwaggerDoc("v2", new OpenApiInfo() { Version = "v2", Title = " Version2" });
-            
+
                 options.IgnoreObsoleteActions();
                 options.IgnoreObsoleteProperties();
 
@@ -191,5 +194,28 @@ namespace SampleTemplate.Extentions
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
         }
+
+        public static void AddDistributedCache(this IServiceCollection services, RedisSettings redisSettings)
+        {
+            if (redisSettings.IsEnabled)
+            {
+                services.AddStackExchangeRedisCache(options =>
+                {
+                    options.InstanceName = redisSettings.InstanceName;
+                    options.ConfigurationOptions = new ConfigurationOptions()
+                    {
+                        Password = redisSettings.Password
+                    };
+                    options.ConnectionMultiplexerFactory = async () => await ConnectionMultiplexer.ConnectAsync(redisSettings.Connection);
+                });
+            }
+
+            else
+            {
+                services.AddDistributedMemoryCache();
+            }
+
+        }
+
     }
 }
