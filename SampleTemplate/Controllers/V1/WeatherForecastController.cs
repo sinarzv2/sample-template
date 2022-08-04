@@ -31,6 +31,7 @@ namespace SampleTemplate.Controllers.V1
         [CustomAuthorize("WeatherForecast.Get")]
         public virtual async Task<IEnumerable<WeatherForecast>> Get()
         {
+            _logger.LogInformation("Start WeatherForecast Get");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

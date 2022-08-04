@@ -36,7 +36,7 @@ namespace SampleTemplate.Extentions
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
-                options.LogTo(Console.WriteLine);
+                //options.LogTo(Console.WriteLine);
             });
         }
         public static void AddCustomIdentity(this IServiceCollection service, IdentitySettings settings)

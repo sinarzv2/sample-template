@@ -1,5 +1,11 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+
+using Common.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using SampleTemplate.Common.Middlewares;
+using SampleTemplate.Extentions;
+using Serilog;
 
 namespace SampleTemplate
 {
@@ -7,14 +13,59 @@ namespace SampleTemplate
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            
+            var builder = WebApplication.CreateBuilder(args);
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+            var siteSettings = builder.Configuration.GetSection(nameof(SiteSettings)).Get<SiteSettings>();
+
+            builder.Host.UseCustomSerilog();
+
+            builder.Services.Configure<SiteSettings>(builder.Configuration.GetSection(nameof(SiteSettings)));
+
+            builder.Services.AddDbContext(builder.Configuration);
+
+            builder.Services.AddCustomIdentity(siteSettings.IdentitySettings);
+
+            builder.Services.AddControllers();
+
+            builder.Services.AddEndpointsApiExplorer();
+
+            builder.Services.AddJwtAuthentication(siteSettings.JwtSettings);
+
+            builder.Services.AddSwagger(siteSettings);
+
+            builder.Services.AddApiVersioning();
+
+            builder.Services.AddMapster();
+
+            builder.Services.AddScrutor();
+
+            builder.Services.AddDistributedCache(siteSettings.RedisSettings);
+
+
+
+
+            var app = builder.Build();
+
+            app.UseSerilogRequestLogging();
+
+            app.UseCustomExceptionHandler();
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.UseSwaggerAndUi();
+
+            app.IntializeDatabase();
+
+            app.MapControllers();
+
+            app.Run();
+        }
     }
 }
