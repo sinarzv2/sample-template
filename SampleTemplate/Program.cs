@@ -47,8 +47,6 @@ namespace SampleTemplate
 
             var app = builder.Build();
 
-            app.UseSerilogRequestLogging();
-
             app.UseCustomExceptionHandler();
 
             app.UseHttpsRedirection();
