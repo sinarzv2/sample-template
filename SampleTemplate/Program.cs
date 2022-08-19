@@ -1,69 +1,57 @@
-
 using Common.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SampleTemplate.Common.Middlewares;
 using SampleTemplate.Extentions;
-using Serilog;
 
-namespace SampleTemplate
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            
-            var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-            var siteSettings = builder.Configuration.GetSection(nameof(SiteSettings)).Get<SiteSettings>();
+var siteSettings = builder.Configuration.GetSection(nameof(SiteSettings)).Get<SiteSettings>();
 
-            builder.Host.UseCustomSerilog();
+builder.Host.UseCustomSerilog();
 
-            builder.Services.Configure<SiteSettings>(builder.Configuration.GetSection(nameof(SiteSettings)));
+builder.Services.Configure<SiteSettings>(builder.Configuration.GetSection(nameof(SiteSettings)));
 
-            builder.Services.AddDbContext(builder.Configuration);
+builder.Services.AddDbContext(builder.Configuration);
 
-            builder.Services.AddCustomIdentity(siteSettings.IdentitySettings);
+builder.Services.AddCustomIdentity(siteSettings.IdentitySettings);
 
-            builder.Services.AddControllers();
+builder.Services.AddControllers();
 
-            builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddJwtAuthentication(siteSettings.JwtSettings);
+builder.Services.AddJwtAuthentication(siteSettings.JwtSettings);
 
-            builder.Services.AddSwagger(siteSettings);
+builder.Services.AddSwagger(siteSettings);
 
-            builder.Services.AddApiVersioning();
+builder.Services.AddApiVersioning();
 
-            builder.Services.AddMapster();
+builder.Services.AddMapster();
 
-            builder.Services.AddScrutor();
+builder.Services.AddScrutor();
 
-            builder.Services.AddDistributedCache(siteSettings.RedisSettings);
+builder.Services.AddDistributedCache(siteSettings.RedisSettings);
 
 
 
 
-            var app = builder.Build();
+var app = builder.Build();
 
-            app.UseCustomExceptionHandler();
+app.UseCustomExceptionHandler();
 
-            app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
-            app.UseRouting();
+app.UseRouting();
 
-            app.UseAuthentication();
+app.UseAuthentication();
 
-            app.UseAuthorization();
+app.UseAuthorization();
 
-            app.UseSwaggerAndUi();
+app.UseSwaggerAndUi();
 
-            app.IntializeDatabase();
+app.IntializeDatabase();
 
-            app.MapControllers();
+app.MapControllers();
 
-            app.Run();
-        }
-    }
-}
+app.Run();

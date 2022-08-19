@@ -1,9 +1,7 @@
-﻿using System.Security.Claims;
+﻿namespace Common.Constant;
 
-namespace Common.Constant
+public class ConstantClaim
 {
-    public class ConstantClaim 
-    {
-        public const string Permission = nameof(Permission);
-    }
+    public const string Permission = nameof(Permission);
 }
+
